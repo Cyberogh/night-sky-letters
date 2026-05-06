@@ -21,7 +21,7 @@ export const Route = createFileRoute("/write-letter")({
 
 function WriteLetter() {
   const navigate = useNavigate();
-  const [draft, setDraft] = useState(getDraft());
+  const [draft] = useState(getDraft());
   const [letterTo, setLetterTo] = useState(draft.letterTo);
   const [letterFrom, setLetterFrom] = useState(draft.letterFrom);
   const [letterBody, setLetterBody] = useState(draft.letterBody);
