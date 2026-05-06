@@ -201,40 +201,72 @@ function Reveal() {
 }
 
 function Intro() {
+  const [lineIdx, setLineIdx] = useState(0);
+
+  useEffect(() => {
+    const timers = REVEAL_LINES.map((_, i) =>
+      setTimeout(() => setLineIdx(i + 1), 500 + i * 2400),
+    );
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   return (
     <motion.div
       exit={{ opacity: 0 }}
       transition={{ duration: 2 }}
-      className="fixed inset-0 z-50 bg-[#050810] flex flex-col items-center justify-center text-center px-6 overflow-hidden"
+      className="fixed inset-0 z-50 bg-[#050810] flex items-center justify-center text-center px-6 overflow-hidden"
     >
       {/* faint stars */}
-      {Array.from({ length: 60 }).map((_, i) => (
+      {Array.from({ length: 80 }).map((_, i) => (
         <span
           key={i}
           className="absolute rounded-full"
           style={{
             left: `${(i * 17) % 100}%`,
             top: `${(i * 31) % 100}%`,
-            width: 1,
-            height: 1,
+            width: i % 7 === 0 ? 2 : 1,
+            height: i % 7 === 0 ? 2 : 1,
             background: "#fff4cc",
-            opacity: 0.4,
+            opacity: 0.5,
+            boxShadow: i % 7 === 0 ? "0 0 6px #fff4cc" : "none",
             animation: `star-twinkle ${3 + (i % 5)}s ease-in-out ${i * 0.1}s infinite`,
           }}
         />
       ))}
-      <div className="relative space-y-6 z-10">
-        {REVEAL_LINES.map((line, i) => (
-          <motion.p
-            key={line}
-            initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
-            animate={{ opacity: [0, 1, 1, 0], y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 4, delay: i * 2.2, times: [0, 0.2, 0.7, 1] }}
-            className="font-serif italic text-2xl sm:text-3xl text-foreground/85 absolute inset-x-0"
-          >
-            {line}
-          </motion.p>
-        ))}
+
+      {/* soft moon glow */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 4 }}
+        className="absolute pointer-events-none"
+        style={{
+          width: "70vmin",
+          height: "70vmin",
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(255,244,204,0.12) 0%, rgba(255,244,204,0.04) 35%, transparent 65%)",
+        }}
+      />
+
+      <div className="relative z-10 h-24 flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          {REVEAL_LINES.map((line, i) =>
+            lineIdx === i + 1 ? (
+              <motion.p
+                key={line}
+                initial={{ opacity: 0, y: 14, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -14, filter: "blur(10px)" }}
+                transition={{ duration: 1.6, ease: "easeOut" }}
+                className="font-serif italic text-2xl sm:text-4xl text-foreground/90 absolute"
+                style={{ textShadow: "0 0 30px rgba(255,244,204,0.25)" }}
+              >
+                {line}
+              </motion.p>
+            ) : null,
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
