@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      skies: {
+        Row: {
+          constellations: Json
+          created_at: string
+          id: string
+          letter_body: string
+          letter_from: string
+          letter_to: string
+          music_url: string | null
+          share_id: string
+          sky_name: string
+          theme: string
+        }
+        Insert: {
+          constellations?: Json
+          created_at?: string
+          id?: string
+          letter_body?: string
+          letter_from?: string
+          letter_to?: string
+          music_url?: string | null
+          share_id: string
+          sky_name?: string
+          theme?: string
+        }
+        Update: {
+          constellations?: Json
+          created_at?: string
+          id?: string
+          letter_body?: string
+          letter_from?: string
+          letter_to?: string
+          music_url?: string | null
+          share_id?: string
+          sky_name?: string
+          theme?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
