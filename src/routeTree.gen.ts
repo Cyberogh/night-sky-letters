@@ -9,38 +9,110 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WriteLetterRouteImport } from './routes/write-letter'
+import { Route as ChooseNightRouteImport } from './routes/choose-night'
+import { Route as BuildSkyRouteImport } from './routes/build-sky'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SkyShareIdRouteImport } from './routes/sky.$shareId'
 
+const WriteLetterRoute = WriteLetterRouteImport.update({
+  id: '/write-letter',
+  path: '/write-letter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChooseNightRoute = ChooseNightRouteImport.update({
+  id: '/choose-night',
+  path: '/choose-night',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildSkyRoute = BuildSkyRouteImport.update({
+  id: '/build-sky',
+  path: '/build-sky',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SkyShareIdRoute = SkyShareIdRouteImport.update({
+  id: '/sky/$shareId',
+  path: '/sky/$shareId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/build-sky': typeof BuildSkyRoute
+  '/choose-night': typeof ChooseNightRoute
+  '/write-letter': typeof WriteLetterRoute
+  '/sky/$shareId': typeof SkyShareIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/build-sky': typeof BuildSkyRoute
+  '/choose-night': typeof ChooseNightRoute
+  '/write-letter': typeof WriteLetterRoute
+  '/sky/$shareId': typeof SkyShareIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/build-sky': typeof BuildSkyRoute
+  '/choose-night': typeof ChooseNightRoute
+  '/write-letter': typeof WriteLetterRoute
+  '/sky/$shareId': typeof SkyShareIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/build-sky'
+    | '/choose-night'
+    | '/write-letter'
+    | '/sky/$shareId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/build-sky' | '/choose-night' | '/write-letter' | '/sky/$shareId'
+  id:
+    | '__root__'
+    | '/'
+    | '/build-sky'
+    | '/choose-night'
+    | '/write-letter'
+    | '/sky/$shareId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuildSkyRoute: typeof BuildSkyRoute
+  ChooseNightRoute: typeof ChooseNightRoute
+  WriteLetterRoute: typeof WriteLetterRoute
+  SkyShareIdRoute: typeof SkyShareIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/write-letter': {
+      id: '/write-letter'
+      path: '/write-letter'
+      fullPath: '/write-letter'
+      preLoaderRoute: typeof WriteLetterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/choose-night': {
+      id: '/choose-night'
+      path: '/choose-night'
+      fullPath: '/choose-night'
+      preLoaderRoute: typeof ChooseNightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build-sky': {
+      id: '/build-sky'
+      path: '/build-sky'
+      fullPath: '/build-sky'
+      preLoaderRoute: typeof BuildSkyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +120,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sky/$shareId': {
+      id: '/sky/$shareId'
+      path: '/sky/$shareId'
+      fullPath: '/sky/$shareId'
+      preLoaderRoute: typeof SkyShareIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuildSkyRoute: BuildSkyRoute,
+  ChooseNightRoute: ChooseNightRoute,
+  WriteLetterRoute: WriteLetterRoute,
+  SkyShareIdRoute: SkyShareIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
