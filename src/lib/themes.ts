@@ -18,7 +18,14 @@ export interface ThemeConfig {
   // moon style
   moon: "full" | "crescent" | "none" | "small-full";
   rain?: boolean;
+  bgImage?: string;
 }
+
+import quietNightBg from "@/assets/skies/quiet-night.jpg";
+import dreamySkyBg from "@/assets/skies/dreamy-sky.jpg";
+import deepSpaceBg from "@/assets/skies/deep-space.jpg";
+import goldenMidnightBg from "@/assets/skies/golden-midnight.jpg";
+import rainyWindowBg from "@/assets/skies/rainy-window.jpg";
 
 export const THEMES: Record<SkyTheme, ThemeConfig> = {
   "quiet-night": {
