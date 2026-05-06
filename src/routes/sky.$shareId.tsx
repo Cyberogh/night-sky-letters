@@ -339,3 +339,32 @@ function CassettePlayer({ url }: { url: string }) {
     </div>
   );
 }
+
+function ShareButton() {
+  const [copied, setCopied] = useState(false);
+  const handleShare = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "I made you a sky.", url });
+        return;
+      }
+    } catch {
+      // user cancelled — fall through to copy
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      toast("link copied — send it to them", { duration: 2400 });
+      setTimeout(() => setCopied(false), 2400);
+    } catch {
+      toast.error("couldn't copy the link");
+    }
+  };
+  return (
+    <button onClick={handleShare} className="paper-button gap-2">
+      {copied ? <Check size={12} /> : <Share2 size={12} />}
+      <span>{copied ? "link copied" : "share this sky"}</span>
+    </button>
+  );
+}
