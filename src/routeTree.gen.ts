@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ChooseNightRouteImport } from './routes/choose-night'
+import { Route as BuildSkyRouteImport } from './routes/build-sky'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ChooseNightRoute = ChooseNightRouteImport.update({
   id: '/choose-night',
   path: '/choose-night',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildSkyRoute = BuildSkyRouteImport.update({
+  id: '/build-sky',
+  path: '/build-sky',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/build-sky': typeof BuildSkyRoute
   '/choose-night': typeof ChooseNightRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/build-sky': typeof BuildSkyRoute
   '/choose-night': typeof ChooseNightRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/build-sky': typeof BuildSkyRoute
   '/choose-night': typeof ChooseNightRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/choose-night'
+  fullPaths: '/' | '/build-sky' | '/choose-night'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/choose-night'
-  id: '__root__' | '/' | '/choose-night'
+  to: '/' | '/build-sky' | '/choose-night'
+  id: '__root__' | '/' | '/build-sky' | '/choose-night'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuildSkyRoute: typeof BuildSkyRoute
   ChooseNightRoute: typeof ChooseNightRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/choose-night'
       fullPath: '/choose-night'
       preLoaderRoute: typeof ChooseNightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build-sky': {
+      id: '/build-sky'
+      path: '/build-sky'
+      fullPath: '/build-sky'
+      preLoaderRoute: typeof BuildSkyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuildSkyRoute: BuildSkyRoute,
   ChooseNightRoute: ChooseNightRoute,
 }
 export const routeTree = rootRouteImport
