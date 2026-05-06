@@ -6,7 +6,7 @@ import { ConstellationGraphic } from "@/components/ConstellationGraphic";
 import { CONSTELLATION_LIBRARY, THEMES, type SkyTheme } from "@/lib/themes";
 import type { PlacedConstellation } from "@/lib/sky-store";
 import { supabase } from "@/integrations/supabase/client";
-import { Music, X } from "lucide-react";
+import { Music, X, Share2, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 
 interface SkyRow {
