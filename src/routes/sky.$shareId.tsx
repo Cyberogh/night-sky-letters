@@ -45,7 +45,8 @@ export const Route = createFileRoute("/sky/$shareId")({
 const REVEAL_LINES = ["someone made you a sky", "made slowly,", "for you"];
 
 function Reveal() {
-  const { sky } = Route.useLoaderData();
+  const data = Route.useLoaderData() as { sky: SkyRow };
+  const sky = data.sky;
   const [phase, setPhase] = useState<"intro" | "sky" | "letter-open">("intro");
   const [letterOpen, setLetterOpen] = useState(false);
   const [activeMessage, setActiveMessage] = useState<string | null>(null);
