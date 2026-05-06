@@ -121,21 +121,25 @@ export function SkyAtmosphere({
         ))}
       </div>
 
-      {/* moon */}
-      {showMoon && cfg.moon !== "none" && <Moon variant={cfg.moon} />}
+      {/* moon — only when no bg image (image already contains a moon) */}
+      {showMoon && cfg.moon !== "none" && !cfg.bgImage && <Moon variant={cfg.moon} />}
 
       {/* rain overlay for rainy theme */}
       {cfg.rain && <Rain />}
 
-      {/* mountain silhouette at bottom */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-[35%] pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(180deg, transparent 0%, rgba(8,12,22,0.3) 40%, rgba(5,8,18,0.85) 80%, #050810 100%)",
-        }}
-      />
-      <MountainSilhouette />
+      {/* mountain silhouette at bottom — skip when bg image provides scenery */}
+      {!cfg.bgImage && (
+        <>
+          <div
+            className="absolute bottom-0 left-0 right-0 h-[35%] pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(180deg, transparent 0%, rgba(8,12,22,0.3) 40%, rgba(5,8,18,0.85) 80%, #050810 100%)",
+            }}
+          />
+          <MountainSilhouette />
+        </>
+      )}
 
       {/* dim overlay */}
       {dim && <div className="absolute inset-0 bg-black/40 pointer-events-none" />}
