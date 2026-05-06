@@ -18,7 +18,14 @@ export interface ThemeConfig {
   // moon style
   moon: "full" | "crescent" | "none" | "small-full";
   rain?: boolean;
+  bgImage?: string;
 }
+
+import quietNightBg from "@/assets/skies/quiet-night.jpg";
+import dreamySkyBg from "@/assets/skies/dreamy-sky.jpg";
+import deepSpaceBg from "@/assets/skies/deep-space.jpg";
+import goldenMidnightBg from "@/assets/skies/golden-midnight.jpg";
+import rainyWindowBg from "@/assets/skies/rainy-window.jpg";
 
 export const THEMES: Record<SkyTheme, ThemeConfig> = {
   "quiet-night": {
@@ -31,6 +38,7 @@ export const THEMES: Record<SkyTheme, ThemeConfig> = {
     starColor: "#fff4cc",
     cloudColor: "rgba(141, 163, 199, 0.18)",
     moon: "full",
+    bgImage: quietNightBg,
   },
   "dreamy-sky": {
     id: "dreamy-sky",
@@ -42,6 +50,7 @@ export const THEMES: Record<SkyTheme, ThemeConfig> = {
     starColor: "#ffe8a3",
     cloudColor: "rgba(199, 184, 227, 0.22)",
     moon: "crescent",
+    bgImage: dreamySkyBg,
   },
   "deep-space": {
     id: "deep-space",
@@ -53,6 +62,7 @@ export const THEMES: Record<SkyTheme, ThemeConfig> = {
     starColor: "#fff4cc",
     cloudColor: "rgba(199, 184, 227, 0.15)",
     moon: "none",
+    bgImage: deepSpaceBg,
   },
   "golden-midnight": {
     id: "golden-midnight",
@@ -64,6 +74,7 @@ export const THEMES: Record<SkyTheme, ThemeConfig> = {
     starColor: "#ffe8a3",
     cloudColor: "rgba(230, 198, 168, 0.22)",
     moon: "crescent",
+    bgImage: goldenMidnightBg,
   },
   "rainy-window": {
     id: "rainy-window",
@@ -76,6 +87,7 @@ export const THEMES: Record<SkyTheme, ThemeConfig> = {
     cloudColor: "rgba(141, 163, 199, 0.25)",
     moon: "small-full",
     rain: true,
+    bgImage: rainyWindowBg,
   },
 };
 

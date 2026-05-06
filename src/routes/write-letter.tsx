@@ -21,12 +21,11 @@ export const Route = createFileRoute("/write-letter")({
 
 function WriteLetter() {
   const navigate = useNavigate();
-  const [draft, setDraft] = useState(getDraft());
+  const [draft] = useState(getDraft());
   const [letterTo, setLetterTo] = useState(draft.letterTo);
   const [letterFrom, setLetterFrom] = useState(draft.letterFrom);
   const [letterBody, setLetterBody] = useState(draft.letterBody);
   const [musicUrl, setMusicUrl] = useState(draft.musicUrl ?? "");
-  const [showMusic, setShowMusic] = useState(!!draft.musicUrl);
   const [sealing, setSealing] = useState(false);
 
   useEffect(() => {
@@ -147,28 +146,22 @@ so i made you a sky instead."
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.4, delay: 0.6 }}
-        className="absolute right-4 top-32 z-20 hidden md:flex flex-col gap-5 max-w-[180px]"
+        className="absolute right-4 top-32 z-20 hidden md:flex flex-col gap-3 max-w-[200px]"
       >
-        <button
-          onClick={() => setShowMusic((v) => !v)}
-          className="flex items-start gap-2 text-left opacity-80 hover:opacity-100 transition-opacity"
-        >
-          <Music size={14} className="mt-1 text-accent-amber" />
+        <div className="flex items-start gap-2">
+          <Music size={14} className="mt-1 text-accent-amber shrink-0" />
           <span className="font-serif italic text-sm leading-snug">
             add a song
-            <br />
-            <span className="text-xs opacity-60">to this sky (optional)</span>
+            <span className="block text-xs opacity-60">to play with this sky (optional)</span>
           </span>
-        </button>
-        {showMusic && (
-          <input
-            value={musicUrl}
-            onChange={(e) => setMusicUrl(e.target.value)}
-            placeholder="paste a link…"
-            className="bg-transparent border-b border-foreground/30 outline-none font-mono text-xs py-1 placeholder:opacity-40"
-          />
-        )}
-        <p className="font-serif italic text-xs opacity-50 leading-relaxed">
+        </div>
+        <input
+          value={musicUrl}
+          onChange={(e) => setMusicUrl(e.target.value)}
+          placeholder="paste a Spotify or YouTube link…"
+          className="bg-transparent border-b border-foreground/30 outline-none font-mono text-xs py-1 placeholder:opacity-40 focus:border-foreground/70"
+        />
+        <p className="font-serif italic text-xs opacity-50 leading-relaxed mt-2">
           some people become constellations
         </p>
       </motion.div>
