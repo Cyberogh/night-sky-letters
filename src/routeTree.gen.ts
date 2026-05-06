@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WriteLetterRouteImport } from './routes/write-letter'
 import { Route as ChooseNightRouteImport } from './routes/choose-night'
 import { Route as BuildSkyRouteImport } from './routes/build-sky'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WriteLetterRoute = WriteLetterRouteImport.update({
+  id: '/write-letter',
+  path: '/write-letter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChooseNightRoute = ChooseNightRouteImport.update({
   id: '/choose-night',
   path: '/choose-night',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/build-sky': typeof BuildSkyRoute
   '/choose-night': typeof ChooseNightRoute
+  '/write-letter': typeof WriteLetterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/build-sky': typeof BuildSkyRoute
   '/choose-night': typeof ChooseNightRoute
+  '/write-letter': typeof WriteLetterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/build-sky': typeof BuildSkyRoute
   '/choose-night': typeof ChooseNightRoute
+  '/write-letter': typeof WriteLetterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/build-sky' | '/choose-night'
+  fullPaths: '/' | '/build-sky' | '/choose-night' | '/write-letter'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/build-sky' | '/choose-night'
-  id: '__root__' | '/' | '/build-sky' | '/choose-night'
+  to: '/' | '/build-sky' | '/choose-night' | '/write-letter'
+  id: '__root__' | '/' | '/build-sky' | '/choose-night' | '/write-letter'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuildSkyRoute: typeof BuildSkyRoute
   ChooseNightRoute: typeof ChooseNightRoute
+  WriteLetterRoute: typeof WriteLetterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/write-letter': {
+      id: '/write-letter'
+      path: '/write-letter'
+      fullPath: '/write-letter'
+      preLoaderRoute: typeof WriteLetterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/choose-night': {
       id: '/choose-night'
       path: '/choose-night'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuildSkyRoute: BuildSkyRoute,
   ChooseNightRoute: ChooseNightRoute,
+  WriteLetterRoute: WriteLetterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
