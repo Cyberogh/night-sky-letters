@@ -52,7 +52,7 @@ function Reveal() {
   const [activeMessage, setActiveMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setPhase("sky"), 7500);
+    const t = setTimeout(() => setPhase("sky"), 8500);
     return () => clearTimeout(t);
   }, []);
 
