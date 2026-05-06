@@ -24,7 +24,7 @@ export const Route = createFileRoute("/build-sky")({
 
 function BuildSky() {
   const navigate = useNavigate();
-  const [draft, setDraft] = useState(getDraft());
+  const [draft] = useState(getDraft());
   const [skyName, setSkyName] = useState(draft.skyName);
   const [placed, setPlaced] = useState<PlacedConstellation[]>(draft.constellations);
   const [selectedId, setSelectedId] = useState<string | null>(null);
