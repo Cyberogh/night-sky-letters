@@ -57,8 +57,23 @@ export function SkyAtmosphere({
   return (
     <div
       className="relative min-h-screen w-full overflow-hidden"
-      style={{ background: cfg.gradient }}
+      style={{
+        background: cfg.bgImage
+          ? `${cfg.gradient}`
+          : cfg.gradient,
+      }}
     >
+      {cfg.bgImage && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: `url(${cfg.bgImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.85,
+          }}
+        />
+      )}
       {/* watercolor clouds */}
       {clouds.map((c, i) => (
         <motion.div
