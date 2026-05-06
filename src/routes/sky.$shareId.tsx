@@ -182,6 +182,7 @@ function Reveal() {
               >
                 ↻ replay the reveal
               </button>
+              <ShareButton />
               <Link to="/" className="paper-button-outline">
                 make a sky of your own →
               </Link>
