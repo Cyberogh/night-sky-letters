@@ -26,7 +26,6 @@ function WriteLetter() {
   const [letterFrom, setLetterFrom] = useState(draft.letterFrom);
   const [letterBody, setLetterBody] = useState(draft.letterBody);
   const [musicUrl, setMusicUrl] = useState(draft.musicUrl ?? "");
-  const [showMusic, setShowMusic] = useState(!!draft.musicUrl);
   const [sealing, setSealing] = useState(false);
 
   useEffect(() => {
