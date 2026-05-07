@@ -121,7 +121,9 @@ function BuildSky() {
       <div
         ref={stageRef}
         className="absolute inset-0 z-10"
-        onClick={() => setSelectedId(null)}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) setSelectedId(null);
+        }}
       >
         {placed.map((item) => {
           const shape = CONSTELLATION_LIBRARY.find((s) => s.id === item.shapeId)!;
