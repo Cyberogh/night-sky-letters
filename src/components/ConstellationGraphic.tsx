@@ -67,20 +67,21 @@ export function ConstellationGraphic({
                 style={{ filter: "blur(4px)" }}
               />
             )}
-            <circle cx={p.x} cy={p.y} r={1.6} fill={starColor} />
+            <circle cx={p.x} cy={p.y} r={2.2} fill={starColor} />
             {/* sparkle cross */}
-            <line x1={p.x - 4} y1={p.y} x2={p.x + 4} y2={p.y} stroke={starColor} strokeWidth={0.3} opacity={0.6} />
-            <line x1={p.x} y1={p.y - 4} x2={p.x} y2={p.y + 4} stroke={starColor} strokeWidth={0.3} opacity={0.6} />
+            <line x1={p.x - 4.5} y1={p.y} x2={p.x + 4.5} y2={p.y} stroke={starColor} strokeWidth={0.5} opacity={0.75} strokeLinecap="round" />
+            <line x1={p.x} y1={p.y - 4.5} x2={p.x} y2={p.y + 4.5} stroke={starColor} strokeWidth={0.5} opacity={0.75} strokeLinecap="round" />
           </motion.g>
         ))}
       </svg>
       {showName && (name || shape.name) && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 font-serif italic text-sm whitespace-nowrap"
+          className="absolute left-1/2 -translate-x-1/2 font-serif italic text-[15px] sm:text-base whitespace-nowrap"
           style={{
-            top: "-0.5rem",
-            color: "rgba(243, 235, 211, 0.7)",
-            textShadow: "0 0 12px rgba(0,0,0,0.6)",
+            top: "-0.6rem",
+            color: "rgba(248, 240, 218, 0.92)",
+            letterSpacing: "0.01em",
+            textShadow: "0 0 14px rgba(0,0,0,0.75), 0 1px 2px rgba(0,0,0,0.6)",
           }}
         >
           {name || shape.name}
