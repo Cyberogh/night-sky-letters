@@ -7,6 +7,7 @@ import { getDraft, saveDraft, clearDraft } from "@/lib/sky-store";
 import { supabase } from "@/integrations/supabase/client";
 import { Music } from "lucide-react";
 import { toast } from "sonner";
+import { SupportTip } from "@/components/SupportTip";
 
 export const Route = createFileRoute("/write-letter")({
   head: () => ({
@@ -59,148 +60,139 @@ function WriteLetter() {
   };
 
   return (
-    <SkyAtmosphere theme={draft.theme} starCount={140} dim>
-      {/* tiny stars behind paper that pulse as user types */}
-      <TypingStars typingKey={letterBody.length} />
+    <div className="relative w-full h-[100svh] min-h-[640px] overflow-hidden">
+      <SkyAtmosphere theme={draft.theme} starCount={120} dim>
+        <TypingStars typingKey={letterBody.length} />
 
-      <div className="absolute top-6 left-6 z-30">
-        <Link to="/build-sky" className="label-mono hover:text-star transition-colors">
-          ← back to the sky
-        </Link>
-      </div>
+        {/* Top bar */}
+        <div className="absolute top-3 sm:top-4 left-0 right-0 z-30 flex items-start justify-between px-4 sm:px-6">
+          <Link to="/build-sky" className="label-mono hover:text-star transition-colors mt-1">
+            ← back
+          </Link>
+          <div className="text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.4 }}
+              className="display-distressed text-lg sm:text-2xl leading-tight"
+            >
+              WRITE YOUR LETTER
+            </motion.h1>
+            <p className="font-serif italic text-[11px] sm:text-sm text-foreground/70">
+              some things are easier beneath the stars
+            </p>
+          </div>
+          <div className="w-10 sm:w-16" />
+        </div>
 
-      <div className="absolute top-0 left-0 right-0 z-20 pt-6 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4 }}
-          className="display-distressed text-2xl sm:text-3xl"
-        >
-          WRITE YOUR LETTER
-        </motion.h1>
-        <p className="font-serif italic text-sm sm:text-base text-foreground/70 mt-1">
-          some things are easier beneath the stars
-        </p>
-      </div>
+        {/* Centered letter — fits one viewport */}
+        <div className="relative z-10 h-full flex items-center justify-center px-4 pt-20 pb-24 sm:pb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 24, rotate: -1 }}
+            animate={{ opacity: 1, y: 0, rotate: -1.2 }}
+            transition={{ duration: 1.4, ease: "easeOut" }}
+            className="paper-letter w-full max-w-xl p-6 sm:p-10 relative"
+          >
+            <div className="relative z-10">
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="font-mono text-[10px] uppercase tracking-widest opacity-70">To:</span>
+                <input
+                  value={letterTo}
+                  onChange={(e) => setLetterTo(e.target.value)}
+                  placeholder="you"
+                  className="flex-1 bg-transparent handwritten outline-none border-b border-[#5a4a32]/40 focus:border-[#5a4a32] pb-1"
+                  style={{ fontStyle: "italic" }}
+                />
+              </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 30, rotate: -1 }}
-          animate={{ opacity: 1, y: 0, rotate: -1.2 }}
-          transition={{ duration: 1.6, ease: "easeOut" }}
-          className="paper-letter w-full max-w-2xl p-10 sm:p-16 relative"
-        >
-          <div className="relative z-10">
-            <div className="flex items-baseline gap-3 mb-6">
-              <span className="font-mono text-xs uppercase tracking-widest opacity-70">To:</span>
-              <input
-                value={letterTo}
-                onChange={(e) => setLetterTo(e.target.value)}
-                placeholder="you"
-                className="flex-1 bg-transparent handwritten outline-none border-b border-[#5a4a32]/40 focus:border-[#5a4a32] pb-1"
-                style={{ fontStyle: "italic" }}
-              />
-            </div>
-
-            <textarea
-              value={letterBody}
-              onChange={(e) => setLetterBody(e.target.value)}
-              placeholder="there were things i wanted to tell you,
+              <textarea
+                value={letterBody}
+                onChange={(e) => setLetterBody(e.target.value)}
+                placeholder="there were things i wanted to tell you,
 but i never knew how.
 so i made you a sky instead."
-              rows={10}
-              className="w-full bg-transparent handwritten outline-none resize-none placeholder:italic placeholder:opacity-50 leading-loose"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(to bottom, transparent 0, transparent 33px, rgba(90,74,50,0.18) 34px)",
-                lineHeight: "34px",
-                paddingTop: "4px",
-              }}
-            />
-
-            <div className="flex items-baseline gap-3 mt-6 justify-end">
-              <span className="font-mono text-xs uppercase tracking-widest opacity-70">From:</span>
-              <input
-                value={letterFrom}
-                onChange={(e) => setLetterFrom(e.target.value)}
-                placeholder="me"
-                className="bg-transparent handwritten outline-none border-b border-[#5a4a32]/40 focus:border-[#5a4a32] pb-1 text-right w-40"
-                style={{ fontStyle: "italic" }}
+                rows={6}
+                className="w-full bg-transparent handwritten outline-none resize-none placeholder:italic placeholder:opacity-50"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(to bottom, transparent 0, transparent 29px, rgba(90,74,50,0.18) 30px)",
+                  lineHeight: "30px",
+                  paddingTop: "2px",
+                }}
               />
+
+              <div className="flex items-baseline gap-3 mt-3 justify-end">
+                <span className="font-mono text-[10px] uppercase tracking-widest opacity-70">From:</span>
+                <input
+                  value={letterFrom}
+                  onChange={(e) => setLetterFrom(e.target.value)}
+                  placeholder="me"
+                  className="bg-transparent handwritten outline-none border-b border-[#5a4a32]/40 focus:border-[#5a4a32] pb-1 text-right w-32"
+                  style={{ fontStyle: "italic" }}
+                />
+              </div>
+
+              {/* music input — inline & subtle */}
+              <div className="mt-4 pt-3 border-t border-[#5a4a32]/20 flex items-center gap-2">
+                <Music size={12} className="opacity-60 shrink-0" style={{ color: "#5a4a32" }} />
+                <input
+                  value={musicUrl}
+                  onChange={(e) => setMusicUrl(e.target.value)}
+                  placeholder="add a song — Spotify or YouTube link (optional)"
+                  className="flex-1 bg-transparent outline-none font-mono text-[11px] placeholder:opacity-40"
+                  style={{ color: "#3d2f1f" }}
+                />
+              </div>
+
+              <svg className="absolute bottom-1 right-1 opacity-50" width="48" height="48" viewBox="0 0 60 60">
+                <path d="M30,55 Q28,40 30,25 Q32,15 30,5" stroke="#5a4a32" strokeWidth="0.6" fill="none" />
+                <path d="M30,40 Q22,35 18,28" stroke="#5a4a32" strokeWidth="0.5" fill="none" />
+                <path d="M30,30 Q38,26 42,18" stroke="#5a4a32" strokeWidth="0.5" fill="none" />
+                <ellipse cx="18" cy="28" rx="3" ry="1.5" fill="#5a4a32" opacity="0.5" transform="rotate(-30 18 28)" />
+                <ellipse cx="42" cy="18" rx="3" ry="1.5" fill="#5a4a32" opacity="0.5" transform="rotate(30 42 18)" />
+              </svg>
             </div>
-
-            {/* botanical sketch corner */}
-            <svg className="absolute bottom-2 right-2 opacity-50" width="60" height="60" viewBox="0 0 60 60">
-              <path d="M30,55 Q28,40 30,25 Q32,15 30,5" stroke="#5a4a32" strokeWidth="0.6" fill="none" />
-              <path d="M30,40 Q22,35 18,28" stroke="#5a4a32" strokeWidth="0.5" fill="none" />
-              <path d="M30,30 Q38,26 42,18" stroke="#5a4a32" strokeWidth="0.5" fill="none" />
-              <ellipse cx="18" cy="28" rx="3" ry="1.5" fill="#5a4a32" opacity="0.5" transform="rotate(-30 18 28)" />
-              <ellipse cx="42" cy="18" rx="3" ry="1.5" fill="#5a4a32" opacity="0.5" transform="rotate(30 42 18)" />
-            </svg>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Right side options */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.4, delay: 0.6 }}
-        className="absolute right-4 top-32 z-20 hidden md:flex flex-col gap-3 max-w-[200px]"
-      >
-        <div className="flex items-start gap-2">
-          <Music size={14} className="mt-1 text-accent-amber shrink-0" />
-          <span className="font-serif italic text-sm leading-snug">
-            add a song
-            <span className="block text-xs opacity-60">to play with this sky (optional)</span>
-          </span>
-        </div>
-        <input
-          value={musicUrl}
-          onChange={(e) => setMusicUrl(e.target.value)}
-          placeholder="paste a Spotify or YouTube link…"
-          className="bg-transparent border-b border-foreground/30 outline-none font-mono text-xs py-1 placeholder:opacity-40 focus:border-foreground/70"
-        />
-        <p className="font-serif italic text-xs opacity-50 leading-relaxed mt-2">
-          some people become constellations
-        </p>
-      </motion.div>
-
-      <div className="absolute bottom-8 left-0 right-0 z-30 flex items-center justify-center gap-6 px-6 flex-wrap">
-        <div className="paper-button-outline">
-          take your time. there's no rush here.
-        </div>
-        <button
-          onClick={handleSeal}
-          disabled={sealing}
-          className="paper-button gap-3 disabled:opacity-50"
-        >
-          <span>SEAL THE LETTER</span>
-          <span className="wax-seal" style={{ width: 24, height: 24, fontSize: 8 }}>★</span>
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {sealing && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2 }}
-            className="absolute inset-0 z-50 bg-black/95 flex items-center justify-center"
-          >
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, delay: 0.6 }}
-              className="font-serif italic text-2xl sm:text-3xl text-foreground/80"
-            >
-              your sky is ready…
-            </motion.p>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </SkyAtmosphere>
+        </div>
+
+        {/* Bottom seal bar */}
+        <div className="absolute bottom-3 sm:bottom-5 left-0 right-0 z-30 flex items-center justify-center gap-3 sm:gap-5 px-4 flex-wrap">
+          <span className="hidden sm:inline font-serif italic text-xs text-foreground/60">
+            take your time. there's no rush here.
+          </span>
+          <button
+            onClick={handleSeal}
+            disabled={sealing}
+            className="paper-button gap-2 disabled:opacity-50 text-sm"
+          >
+            <span>SEAL THE LETTER</span>
+            <span className="wax-seal" style={{ width: 22, height: 22, fontSize: 8 }}>★</span>
+          </button>
+          <SupportTip />
+        </div>
+
+        <AnimatePresence>
+          {sealing && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.2 }}
+              className="absolute inset-0 z-50 bg-black/95 flex items-center justify-center"
+            >
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, delay: 0.6 }}
+                className="font-serif italic text-2xl sm:text-3xl text-foreground/80"
+              >
+                your sky is ready…
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </SkyAtmosphere>
+    </div>
   );
 }
 
