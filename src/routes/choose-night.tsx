@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { SkyAtmosphere, AmbientPhrases } from "@/components/SkyAtmosphere";
-import { THEME_LIST, type SkyTheme } from "@/lib/themes";
+import { type SkyTheme, THEME_LIST } from "@/lib/themes";
 import { saveDraft } from "@/lib/sky-store";
 import { StarIcon } from "@/components/AtmosphereUI";
+import chooseBg from "@/assets/skies/choose.jpg";
 
 export const Route = createFileRoute("/choose-night")({
   head: () => ({
@@ -29,40 +29,52 @@ function ChooseNight() {
   };
 
   return (
-    <SkyAtmosphere theme="quiet-night" starCount={140}>
-      <AmbientPhrases
-        phrases={[
-          "some nights stay with us forever",
-          "we never finished that conversation",
-          "you looked beautiful that night",
-          "some people become constellations",
-          "if stars could talk, they'd tell your name",
-        ]}
+    <div
+      className="relative w-full h-[100svh] min-h-[640px] overflow-hidden"
+      style={{ background: "#080c16" }}
+    >
+      {/* full watercolor background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${chooseBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       />
+      {/* foreground/background separation overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.45) 100%)",
+        }}
+      />
+      <div className="grain absolute inset-0 pointer-events-none opacity-60" />
 
-      <div className="absolute top-6 left-6 z-20">
+      <div className="absolute top-5 left-5 sm:top-6 sm:left-6 z-20">
         <Link to="/" className="label-mono hover:text-star transition-colors">
           ← back to home
         </Link>
       </div>
-      <div className="absolute top-6 right-6 z-20 label-mono opacity-60">fig. 02</div>
+      <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-20 label-mono opacity-60">fig. 02</div>
 
-      <div className="relative z-10 px-6 pt-20 pb-32 max-w-7xl mx-auto">
+      <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 pt-14 sm:pt-12 pb-10 sm:pb-8 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.4 }}
-          className="text-center mb-16"
+          className="text-center shrink-0 mb-4 sm:mb-6"
         >
-          <div className="flex items-center justify-center gap-3 mb-3 opacity-60">
-            <span className="h-px w-10 bg-foreground/40" />
-            <StarIcon size={10} />
-            <span className="h-px w-10 bg-foreground/40" />
+          <div className="flex items-center justify-center gap-3 mb-2 opacity-60">
+            <span className="h-px w-8 bg-foreground/40" />
+            <StarIcon size={9} />
+            <span className="h-px w-8 bg-foreground/40" />
           </div>
-          <h1 className="display-distressed text-[clamp(2.4rem,7vw,5rem)] leading-tight">
+          <h1 className="display-distressed text-[clamp(1.8rem,4.5vw,3.4rem)] leading-[1.05]">
             CHOOSE YOUR NIGHT
           </h1>
-          <p className="font-serif italic text-lg sm:text-xl text-foreground/75 mt-3">
+          <p className="font-serif italic text-sm sm:text-base text-foreground/75 mt-1">
             every sky carries a different feeling
           </p>
         </motion.div>
@@ -70,7 +82,7 @@ function ChooseNight() {
         <motion.div
           animate={selected ? { opacity: 0, scale: 1.05, filter: "blur(10px)" } : {}}
           transition={{ duration: 1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
+          className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5 min-h-0 content-center"
         >
           {THEME_LIST.map((t, i) => (
             <NightCard
@@ -100,7 +112,7 @@ function ChooseNight() {
           </p>
         </motion.div>
       )}
-    </SkyAtmosphere>
+    </div>
   );
 }
 
@@ -126,22 +138,22 @@ function NightCard({
   const rotation = [-1.5, 1, -0.5, 1.8, -1][index % 5];
   return (
     <motion.button
-      initial={{ opacity: 0, y: 30, rotate: rotation }}
+      initial={{ opacity: 0, y: 24, rotate: rotation }}
       animate={{ opacity: 1, y: 0, rotate: rotation, scale: isSelected ? 1.1 : 1 }}
-      transition={{ duration: 1.2, delay: 0.2 + index * 0.15, ease: "easeOut" }}
-      whileHover={{ y: -6, rotate: rotation * 0.4, scale: 1.02 }}
+      transition={{ duration: 1.1, delay: 0.15 + index * 0.12, ease: "easeOut" }}
+      whileHover={{ y: -5, rotate: rotation * 0.4, scale: 1.03 }}
       onClick={onClick}
-      className="group relative aspect-[4/3] overflow-hidden text-left cursor-pointer"
+      className="group relative w-full h-full min-h-[160px] overflow-hidden text-left cursor-pointer"
       style={{
         background: gradient,
-        boxShadow: "0 20px 60px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(231,217,183,0.1)",
+        boxShadow: "0 18px 50px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(231,217,183,0.1)",
         clipPath:
           "polygon(1% 4%, 4% 0%, 96% 2%, 100% 8%, 99% 92%, 96% 100%, 4% 98%, 0% 90%)",
       }}
     >
       {/* mini stars */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 25 }).map((_, i) => {
+        {Array.from({ length: 18 }).map((_, i) => {
           const x = (i * 37 + index * 11) % 100;
           const y = (i * 23 + index * 7) % 100;
           return (
@@ -162,7 +174,6 @@ function NightCard({
         })}
       </div>
 
-      {/* paper-edge texture */}
       <div
         className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-40"
         style={{
@@ -171,18 +182,17 @@ function NightCard({
         }}
       />
 
-      <div className="absolute top-3 left-4 label-mono opacity-70">{number}</div>
+      <div className="absolute top-2 left-3 label-mono opacity-70 text-[10px]">{number}</div>
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-        <h3 className="display-distressed text-[clamp(1.6rem,4vw,2.6rem)] leading-tight">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3">
+        <h3 className="display-distressed text-[clamp(1.05rem,1.6vw,1.7rem)] leading-tight">
           {title.toUpperCase()}
         </h3>
-        <p className="font-serif italic text-sm sm:text-base text-foreground/75 mt-1">
+        <p className="font-serif italic text-[11px] sm:text-xs text-foreground/75 mt-1 leading-snug">
           {subtitle}
         </p>
       </div>
 
-      {/* hover glow */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
         style={{ boxShadow: `inset 0 0 80px ${starColor}30` }}
       />
