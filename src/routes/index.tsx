@@ -27,6 +27,11 @@ function Landing() {
           backgroundPosition: "center",
         }}
       />
+      {/* foreground/background separation */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "rgba(0,0,0,0.22)" }}
+      />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
