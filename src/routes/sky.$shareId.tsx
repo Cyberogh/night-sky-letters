@@ -8,6 +8,7 @@ import type { PlacedConstellation } from "@/lib/sky-store";
 import { supabase } from "@/integrations/supabase/client";
 import { Music, X, Share2, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import { SupportTip } from "@/components/SupportTip";
 
 interface SkyRow {
   share_id: string;
