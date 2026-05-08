@@ -41,10 +41,11 @@ export function ConstellationGraphic({
               x2={p2.x}
               y2={p2.y}
               stroke={starColor}
-              strokeWidth={0.5}
-              strokeDasharray="2 3"
-              opacity={0.5}
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              strokeWidth={0.9}
+              strokeLinecap="round"
+              strokeDasharray="2.5 3.5"
+              opacity={0.7}
+              animate={{ opacity: [0.5, 0.85, 0.5] }}
               transition={{ duration: 5 + i * 0.3, repeat: Infinity, ease: "easeInOut" }}
             />
           );
