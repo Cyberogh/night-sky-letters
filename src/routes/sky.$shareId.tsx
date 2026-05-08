@@ -183,7 +183,10 @@ function Reveal() {
               >
                 ↻ replay the reveal
               </button>
-              <ShareButton />
+              <div className="flex items-center gap-5 flex-wrap justify-center">
+                <SupportTip />
+                <ShareButton />
+              </div>
               <Link to="/" className="paper-button-outline">
                 make a sky of your own →
               </Link>
