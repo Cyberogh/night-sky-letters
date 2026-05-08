@@ -8,6 +8,7 @@ import type { PlacedConstellation } from "@/lib/sky-store";
 import { supabase } from "@/integrations/supabase/client";
 import { Music, X, Share2, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import { SupportTip } from "@/components/SupportTip";
 
 interface SkyRow {
   share_id: string;
@@ -182,7 +183,10 @@ function Reveal() {
               >
                 ↻ replay the reveal
               </button>
-              <ShareButton />
+              <div className="flex items-center gap-5 flex-wrap justify-center">
+                <SupportTip />
+                <ShareButton />
+              </div>
               <Link to="/" className="paper-button-outline">
                 make a sky of your own →
               </Link>

@@ -64,15 +64,25 @@ export function SkyAtmosphere({
       }}
     >
       {cfg.bgImage && (
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `url(${cfg.bgImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            opacity: 0.85,
-          }}
-        />
+        <>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `url(${cfg.bgImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: 0.85,
+            }}
+          />
+          {/* subtle foreground/background separation */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.28) 80%, rgba(0,0,0,0.42) 100%)",
+            }}
+          />
+        </>
       )}
       {/* watercolor clouds */}
       {clouds.map((c, i) => (
